@@ -1,0 +1,971 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Interville — La cerise sur le cannelé</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%90%84%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&display=swap">
+<style>
+  :root{
+    --bg:#F4E9D3;
+    --bg-elevated:#FCF7EC;
+    --bg-card:#FFFDF8;
+    --ink:#271B12;
+    --ink-soft:#6B5A45;
+    --ink-faint:#9A8A72;
+    --line: rgba(39,27,18,0.14);
+    --line-strong: rgba(39,27,18,0.26);
+
+    --bordeaux:#7A1230;
+    --bordeaux-ink:#4a0b1e;
+    --bordeaux-soft:#F1D9DF;
+    --bordeaux-on:#FBEEF1;
+
+    --paris:#1D3C74;
+    --paris-ink:#12274d;
+    --paris-soft:#DBE3F1;
+    --paris-on:#EAF0FC;
+
+    --gold:#A9761F;
+    --gold-strong:#8C5F14;
+    --gold-soft:#F2E1B8;
+
+    --rust:#9C4A2E;
+    --rust-soft:#F1DCD1;
+
+    --shadow: 0 1px 2px rgba(39,27,18,0.08), 0 8px 24px -12px rgba(39,27,18,0.28);
+    --radius: 14px;
+  }
+
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#161009;
+      --bg-elevated:#1F1710;
+      --bg-card:#251C13;
+      --ink:#F4E9D6;
+      --ink-soft:#CDB99E;
+      --ink-faint:#8E7B63;
+      --line: rgba(244,233,214,0.14);
+      --line-strong: rgba(244,233,214,0.26);
+
+      --bordeaux:#E15C7D;
+      --bordeaux-ink:#ffd7e0;
+      --bordeaux-soft: rgba(225,92,125,0.16);
+      --bordeaux-on:#2A0F17;
+
+      --paris:#7FA2E8;
+      --paris-ink:#dbe6ff;
+      --paris-soft: rgba(127,162,232,0.16);
+      --paris-on:#101B33;
+
+      --gold:#E8B65B;
+      --gold-strong:#F4CB7E;
+      --gold-soft: rgba(232,182,91,0.16);
+
+      --rust:#E2795A;
+      --rust-soft: rgba(226,121,90,0.16);
+
+      --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 10px 30px -14px rgba(0,0,0,0.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#161009;
+    --bg-elevated:#1F1710;
+    --bg-card:#251C13;
+    --ink:#F4E9D6;
+    --ink-soft:#CDB99E;
+    --ink-faint:#8E7B63;
+    --line: rgba(244,233,214,0.14);
+    --line-strong: rgba(244,233,214,0.26);
+
+    --bordeaux:#E15C7D;
+    --bordeaux-ink:#ffd7e0;
+    --bordeaux-soft: rgba(225,92,125,0.16);
+    --bordeaux-on:#2A0F17;
+
+    --paris:#7FA2E8;
+    --paris-ink:#dbe6ff;
+    --paris-soft: rgba(127,162,232,0.16);
+    --paris-on:#101B33;
+
+    --gold:#E8B65B;
+    --gold-strong:#F4CB7E;
+    --gold-soft: rgba(232,182,91,0.16);
+
+    --rust:#E2795A;
+    --rust-soft: rgba(226,121,90,0.16);
+
+    --shadow: 0 1px 2px rgba(0,0,0,0.4), 0 10px 30px -14px rgba(0,0,0,0.6);
+  }
+
+  *{ box-sizing: border-box; }
+  html, body{ background: var(--bg); }
+  body{
+    margin:0;
+    color: var(--ink);
+    font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap{ max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+  h1,h2,h3{ text-wrap: balance; margin: 0; }
+  .display{ font-family:'Anton', 'Impact', 'Arial Narrow Bold', sans-serif; font-weight:400; letter-spacing: 0.01em; }
+  .eyebrow{
+    font-size: 12px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  table{ font-variant-numeric: tabular-nums; }
+  ::selection{ background: var(--gold-soft); }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position: relative;
+    overflow: hidden;
+    padding: 56px 0 40px;
+    background:
+      linear-gradient(180deg, rgba(20,14,8,0.72), rgba(20,14,8,0.88)),
+      linear-gradient(112deg, var(--bordeaux-ink) 0 47%, #1a130c 47% 53%, var(--paris-ink) 53% 100%);
+    color: #F7EFDE;
+  }
+  .hero .wrap{ position: relative; z-index: 1; }
+  .hero-eyebrow{
+    display:flex; align-items:center; gap:10px;
+    font-size:12px; font-weight:800; letter-spacing:0.18em; text-transform:uppercase;
+    color: rgba(247,239,222,0.72);
+    margin-bottom: 18px;
+  }
+  .hero-eyebrow .dot{ width:6px; height:6px; border-radius:50%; background: var(--gold-strong); }
+  .wordmark{
+    font-size: clamp(52px, 11vw, 118px);
+    line-height: 0.88;
+    letter-spacing: 0.01em;
+    margin: 0;
+    text-shadow: 0 6px 0 rgba(0,0,0,0.18);
+  }
+  .wordmark .accent{ color: var(--gold-strong); }
+  .subtitle{
+    font-family:'Anton', sans-serif;
+    font-size: clamp(20px, 3.2vw, 30px);
+    color: var(--gold-strong);
+    margin-top: 6px;
+    letter-spacing: 0.01em;
+  }
+  .tagline{
+    margin-top: 14px;
+    font-size: 16px;
+    color: rgba(247,239,222,0.82);
+    max-width: 46ch;
+  }
+  .tagline b{ color: #fff; }
+
+  /* ---------- SCOREBOARD ---------- */
+  .scoreboard{
+    margin-top: 34px;
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--line);
+    overflow: hidden;
+    color: var(--ink);
+  }
+  .score-row{
+    display:grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items:stretch;
+  }
+  .score-side{
+    padding: 22px 20px;
+    display:flex; flex-direction:column; gap:6px;
+    position:relative;
+  }
+  .score-side.bordeaux{ background: var(--bordeaux-soft); }
+  .score-side.paris{ background: var(--paris-soft); align-items:flex-end; text-align:right; }
+  .score-team-name{
+    font-family:'Anton', sans-serif; font-size: 22px; letter-spacing:0.03em;
+  }
+  .score-side.bordeaux .score-team-name{ color: var(--bordeaux); }
+  .score-side.paris .score-team-name{ color: var(--paris); }
+  .score-points{
+    font-family:'Anton', sans-serif;
+    font-size: clamp(48px, 8vw, 72px);
+    line-height: 1;
+  }
+  .score-side.bordeaux .score-points{ color: var(--bordeaux); }
+  .score-side.paris .score-points{ color: var(--paris); }
+  .score-sub{ font-size:12px; color: var(--ink-soft); font-weight:600; }
+  .score-vs{
+    display:flex; align-items:center; justify-content:center;
+    padding: 14px 18px;
+    background: var(--bg-elevated);
+  }
+  .score-vs-mascot{ display:flex; flex-direction:column; align-items:center; gap:5px; }
+  .score-vs-mascot .coin{
+    width:52px; height:52px; border-radius:50%;
+    background: radial-gradient(circle at 32% 28%, #FCEFC7, var(--gold) 78%);
+    border:2.5px solid var(--ink); display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.18);
+  }
+  .score-vs-mascot .coin .icon{ width:32px; height:32px; color:#2c1c10; }
+  .score-vs-mascot .label{ font-family:'Anton', sans-serif; font-size:11px; color: var(--ink-faint); letter-spacing:0.06em; }
+  .week-dots{
+    display:flex; gap:8px; padding: 14px 20px 18px; justify-content:center;
+    border-top: 1px solid var(--line);
+    background: var(--bg-elevated);
+  }
+  .week-dot{
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+    font-size:10px; font-weight:800; letter-spacing:0.06em; color:var(--ink-faint); text-transform:uppercase;
+  }
+  .week-dot .chip{
+    width:34px; height:34px; border-radius:9px;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Anton', sans-serif; font-size:13px;
+    border: 1.5px solid var(--line-strong);
+    color: var(--ink-faint);
+    background: var(--bg-card);
+  }
+  .week-dot .chip.win-bordeaux{ background: var(--bordeaux); border-color: var(--bordeaux); color: var(--bordeaux-on); }
+  .week-dot .chip.win-paris{ background: var(--paris); border-color: var(--paris); color: var(--paris-on); }
+  .week-dot .chip.win-tie{ background: var(--gold-soft); border-color: var(--gold); color: var(--gold-strong); }
+
+  /* ---------- ICONS & MASCOT ---------- */
+  .icon{ width:16px; height:16px; flex-shrink:0; }
+  .icon-lg{ width:20px; height:20px; }
+  .mini-icon{ width:13px; height:13px; }
+  .team-name-icon{ display:inline-flex; align-items:center; gap:8px; }
+  .mascot-badge{
+    position:absolute; top:20px; right:24px; z-index:2;
+    display:flex; flex-direction:column; align-items:center; gap:5px;
+    transform: rotate(6deg);
+  }
+  .mascot-badge .coin{
+    width:76px; height:76px; border-radius:50%;
+    background: radial-gradient(circle at 32% 28%, #FCEFC7, var(--gold-strong) 72%);
+    border:3px solid #2c1c10; display:flex; align-items:center; justify-content:center;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.4);
+  }
+  .mascot-badge .coin .icon{ width:48px; height:48px; }
+  .mascot-badge .cap{
+    font-family:'Anton', sans-serif; font-size:9px; letter-spacing:0.08em; text-transform:uppercase;
+    color: var(--gold-strong); background: rgba(20,14,8,0.55); padding:3px 9px; border-radius:999px;
+  }
+
+  /* ---------- SECTIONS ---------- */
+  section{ padding: 54px 0; }
+  .section-head{ margin-bottom: 26px; max-width: 62ch; }
+  .section-head h2{ font-family:'Anton', sans-serif; font-size: clamp(26px,4vw,36px); letter-spacing:0.01em; margin-top:4px; }
+  .section-head p{ color: var(--ink-soft); font-size:15px; margin-top:8px; line-height:1.55; }
+
+  /* entry form */
+  .entry-card{
+    background: var(--bg-card); border:1px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 24px;
+  }
+  .entry-grid{
+    display:grid; grid-template-columns: repeat(4, 1fr); gap:14px; align-items:end;
+  }
+  .field label{ display:block; font-size:11px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color: var(--ink-faint); margin-bottom:6px; }
+  select, input[type=number]{
+    width:100%; padding:11px 12px; border-radius:9px; border:1.5px solid var(--line-strong);
+    background: var(--bg-elevated); color: var(--ink); font-family:'Manrope',sans-serif; font-size:15px; font-weight:600;
+  }
+  select:focus, input:focus{ outline: 2px solid var(--gold); outline-offset:1px; }
+  .btn{
+    padding: 11px 18px; border-radius:9px; border:none; cursor:pointer;
+    background: var(--ink); color: var(--bg-elevated);
+    font-family:'Manrope',sans-serif; font-weight:800; font-size:14px; letter-spacing:0.02em;
+    transition: transform 0.08s ease;
+  }
+  .btn:hover{ transform: translateY(-1px); }
+  .btn:active{ transform: translateY(0); }
+  .btn:disabled{ opacity:0.5; cursor:not-allowed; }
+  .entry-foot{ display:flex; justify-content:space-between; align-items:center; margin-top:14px; gap:12px; flex-wrap:wrap; }
+  .entry-hint{ font-size:12.5px; color: var(--ink-faint); }
+  .status-msg{ font-size:13px; font-weight:700; color: var(--ink-soft); min-height:18px; }
+  .status-msg.ok{ color: var(--gold-strong); }
+  .status-msg.err{ color: var(--rust); }
+
+  /* week cards */
+  .weeks-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap:18px; }
+  .week-card{
+    background: var(--bg-card); border:1px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow); padding: 20px; display:flex; flex-direction:column; gap:14px;
+  }
+  .week-card-head{ display:flex; align-items:flex-start; gap:12px; }
+  .week-num{
+    font-family:'Anton',sans-serif; font-size:26px; color: var(--gold-strong);
+    background: var(--gold-soft); border-radius:8px; width:44px; height:44px;
+    display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .week-card-title{ font-weight:800; font-size:16px; }
+  .week-card-sub{ font-size:12px; color: var(--ink-faint); font-weight:700; text-transform:uppercase; letter-spacing:0.04em; margin-top:2px; }
+  .week-bars{ display:flex; flex-direction:column; gap:8px; }
+  .bar-row{ display:grid; grid-template-columns: 64px 1fr 40px; align-items:center; gap:8px; font-size:12px; font-weight:700; }
+  .bar-track{ background: var(--line); border-radius:6px; height:10px; overflow:hidden; }
+  .bar-fill{ height:100%; border-radius:6px; }
+  .bar-fill.bordeaux{ background: var(--bordeaux); }
+  .bar-fill.paris{ background: var(--paris); }
+  .week-leader{
+    align-self:flex-start; font-size:11px; font-weight:800; letter-spacing:0.04em; text-transform:uppercase;
+    padding: 4px 10px; border-radius:999px;
+    display:inline-flex; align-items:center; gap:5px;
+  }
+  .week-leader.bordeaux{ background: var(--bordeaux-soft); color: var(--bordeaux); }
+  .week-leader.paris{ background: var(--paris-soft); color: var(--paris); }
+  .week-leader.tie{ background: var(--gold-soft); color: var(--gold-strong); }
+  .week-leader.pending{ background: var(--line); color: var(--ink-faint); }
+  .week-performer-row{ display:flex; flex-wrap:wrap; gap:8px; }
+  .performer-tag{
+    display:inline-flex; align-items:center; gap:5px; font-size:11px; font-weight:800;
+    padding:4px 9px; border-radius:999px;
+  }
+  .performer-tag.top{ background: var(--gold-soft); color: var(--gold-strong); }
+  .performer-tag.low{ background: var(--rust-soft); color: var(--rust); }
+  .contrib-list{ display:flex; flex-wrap:wrap; gap:6px; }
+  .chip-person{
+    font-size:11px; font-weight:700; padding:4px 8px; border-radius:999px;
+    display:flex; align-items:center; gap:5px; border:1px solid var(--line-strong);
+  }
+  .chip-person.bordeaux{ color: var(--bordeaux); }
+  .chip-person.paris{ color: var(--paris); }
+  .chip-person .v{ opacity:0.7; }
+  .chip-person.pending{ color: var(--ink-faint); border-style:dashed; }
+
+  /* rosters */
+  .roster-grid{ display:grid; grid-template-columns: 1fr 1fr; gap:18px; }
+  .roster-card{ background: var(--bg-card); border:1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); overflow:hidden; }
+  .roster-head{ padding:16px 18px; font-family:'Anton',sans-serif; font-size:19px; letter-spacing:0.02em; }
+  .roster-head.bordeaux{ background: var(--bordeaux); color: var(--bordeaux-on); }
+  .roster-head.paris{ background: var(--paris); color: var(--paris-on); }
+  table.roster{ width:100%; border-collapse: collapse; font-size:13px; }
+  table.roster th, table.roster td{ padding:10px 14px; text-align:right; border-top:1px solid var(--line); }
+  table.roster th:first-child, table.roster td:first-child{ text-align:left; }
+  table.roster th{ font-size:10px; text-transform:uppercase; letter-spacing:0.06em; color: var(--ink-faint); font-weight:800; }
+  table.roster td.name{ font-weight:700; }
+  table.roster td.total{ font-weight:800; color: var(--ink); }
+  .scroll-x{ overflow-x:auto; }
+
+  /* performance badges */
+  .badge{ font-size:10px; font-weight:800; text-transform:uppercase; letter-spacing:0.04em; padding:3px 9px; border-radius:999px; display:inline-flex; align-items:center; gap:4px; }
+  .badge.top{ background: var(--gold-soft); color: var(--gold-strong); }
+  .badge.low{ background: var(--rust-soft); color: var(--rust); }
+
+  /* prize */
+  .prize-banner{
+    background: linear-gradient(120deg, var(--gold-soft), var(--bg-card));
+    border:1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow);
+    padding: 26px 28px; display:flex; flex-wrap:wrap; gap:24px; justify-content:space-between; align-items:center;
+  }
+  .prize-amount{ font-family:'Anton',sans-serif; font-size: 56px; color: var(--gold-strong); line-height:1; }
+  .prize-note{ max-width: 40ch; font-size:14px; color: var(--ink-soft); line-height:1.5; }
+  .prize-split{ margin-top:22px; display:grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap:10px; }
+  .split-item{
+    background: var(--bg-card); border:1px solid var(--line); border-radius:10px; padding:12px 14px;
+    display:flex; justify-content:space-between; align-items:center; gap:8px;
+  }
+  .split-item .who{ font-weight:800; font-size:13px; }
+  .split-item .amt{ font-family:'Anton',sans-serif; font-size:17px; color: var(--gold-strong); }
+  .rules-note{
+    margin-top:16px; font-size:12.5px; color: var(--ink-faint); background: var(--bg-elevated);
+    border:1px dashed var(--line-strong); border-radius:10px; padding:12px 14px; line-height:1.5;
+  }
+
+  footer{ padding: 30px 0 50px; text-align:center; color: var(--ink-faint); font-size:12px; }
+  .updated{ margin-top:4px; }
+
+  @media (max-width: 760px){
+    .entry-grid{ grid-template-columns: 1fr 1fr; }
+    .weeks-grid{ grid-template-columns: 1fr; }
+    .roster-grid{ grid-template-columns: 1fr; }
+    .score-row{ grid-template-columns: 1fr; }
+    .score-vs{ padding:10px; }
+    .score-side.paris{ align-items:flex-start; text-align:left; }
+    .mascot-badge{ top:12px; right:14px; }
+    .mascot-badge .coin{ width:56px; height:56px; }
+    .mascot-badge .coin .icon{ width:36px; height:36px; }
+    .mascot-badge .cap{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+  <symbol id="icon-eiffel" viewBox="0 0 24 24">
+    <path d="M12 2.5 L14.6 9 L20.5 21.5 M12 2.5 L9.4 9 L3.5 21.5 M9.6 8.4 L14.4 8.4 M7.6 13.5 L16.4 13.5 M5.4 18 L18.6 18 M3.5 21.5 L6 21.5 M20.5 21.5 L18 21.5 M12 2.5 L12 0.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+  <symbol id="icon-canele" viewBox="0 0 24 24">
+    <path d="M6.2 9.2 L5.3 18.8 Q12 21.6 18.7 18.8 L17.8 9.2 Z" fill="currentColor" opacity="0.55"/>
+    <path d="M8 9.6 L7.6 18" stroke="currentColor" stroke-width="1" opacity="0.85" stroke-linecap="round"/>
+    <path d="M10.7 9.6 L10.5 19" stroke="currentColor" stroke-width="1" opacity="0.85" stroke-linecap="round"/>
+    <path d="M13.3 9.6 L13.5 19" stroke="currentColor" stroke-width="1" opacity="0.85" stroke-linecap="round"/>
+    <path d="M16 9.6 L16.4 18" stroke="currentColor" stroke-width="1" opacity="0.85" stroke-linecap="round"/>
+    <ellipse cx="12" cy="9" rx="6" ry="2.1" fill="currentColor"/>
+  </symbol>
+  <symbol id="icon-crown" viewBox="0 0 24 24">
+    <path d="M4 18 L3 9 L8 13 L12 6 L16 13 L21 9 L20 18 Z" fill="currentColor"/>
+    <rect x="4" y="19" width="16" height="2" rx="1" fill="currentColor"/>
+  </symbol>
+  <symbol id="icon-lantern" viewBox="0 0 24 24">
+    <path d="M12 2 L12 4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+    <path d="M9 4.5 H15 L16 8 H8 Z" fill="currentColor"/>
+    <rect x="7.5" y="8" width="9" height="9.5" rx="2.5" fill="currentColor" opacity="0.9"/>
+    <circle cx="12" cy="12.7" r="2.1" fill="var(--bg-card)"/>
+    <path d="M9.5 17.5 H14.5 L13.5 21 H10.5 Z" fill="currentColor"/>
+  </symbol>
+  <symbol id="icon-cow" viewBox="0 0 48 48">
+    <ellipse cx="24" cy="27" rx="16" ry="14" fill="#F7F1E4"/>
+    <ellipse cx="12" cy="17" rx="4.6" ry="6" fill="#2c1c10" transform="rotate(-25 12 17)"/>
+    <ellipse cx="36" cy="17" rx="4.6" ry="6" fill="#2c1c10" transform="rotate(25 36 17)"/>
+    <ellipse cx="15" cy="24" rx="4.2" ry="3.2" fill="#2c1c10" opacity="0.85"/>
+    <ellipse cx="31" cy="33" rx="5" ry="3.6" fill="#2c1c10" opacity="0.85"/>
+    <ellipse cx="24" cy="35" rx="9" ry="7" fill="#FBEFDD"/>
+    <circle cx="18" cy="24" r="2.1" fill="#2c1c10"/>
+    <circle cx="30" cy="24" r="2.1" fill="#2c1c10"/>
+    <ellipse cx="19.5" cy="36" rx="1.6" ry="1.2" fill="#2c1c10"/>
+    <ellipse cx="28.5" cy="36" rx="1.6" ry="1.2" fill="#2c1c10"/>
+    <path d="M8 12 L11 16 M40 12 L37 16" stroke="#2c1c10" stroke-width="2" stroke-linecap="round"/>
+  </symbol>
+</svg>
+
+<div class="hero">
+  <div class="mascot-badge">
+    <div class="coin"><svg class="icon"><use href="#icon-cow"></use></svg></div>
+    <span class="cap">La vachette</span>
+  </div>
+  <div class="wrap">
+    <div class="hero-eyebrow"><span class="dot"></span> Challenge commercial · 4 semaines</div>
+    <h1 class="wordmark display">INTER<span class="accent">VILLE</span></h1>
+    <div class="subtitle">La cerise sur le cannelé</div>
+    <p class="tagline">Chaque semaine, une épreuve. Chaque épreuve, un point. <b>Bordeaux</b> contre <b>Paris</b> — l'équipe qui totalise le plus de points en fin de mois remporte la cagnotte.</p>
+
+    <div class="scoreboard" id="scoreboard"></div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <section id="entry-section">
+    <div class="section-head">
+      <div class="eyebrow">Saisie des scores</div>
+      <h2>Enregistre ton résultat</h2>
+      <p>Choisis ton prénom, la semaine concernée, et ton chiffre. Pas besoin de compte — tu peux revenir modifier ta saisie à tout moment, elle se met à jour pour tout le monde en direct.</p>
+    </div>
+    <div class="entry-card">
+      <div class="entry-grid">
+        <div class="field">
+          <label for="f-name">Qui es-tu ?</label>
+          <select id="f-name"></select>
+        </div>
+        <div class="field">
+          <label for="f-week">Semaine</label>
+          <select id="f-week"></select>
+        </div>
+        <div class="field">
+          <label for="f-value" id="f-value-label">Ton score</label>
+          <input id="f-value" type="number" min="0" step="1" placeholder="0" />
+        </div>
+        <div class="field">
+          <button class="btn" id="f-submit" type="button">Enregistrer mon score</button>
+        </div>
+      </div>
+      <div class="entry-foot">
+        <div class="status-msg" id="f-status"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="weeks-section">
+    <div class="section-head">
+      <div class="eyebrow">Les 4 épreuves</div>
+      <h2>Le calendrier du mois</h2>
+      <p>Une épreuve différente chaque semaine. L'équipe qui cumule le plus sur l'épreuve remporte le point de la semaine.</p>
+    </div>
+    <div class="weeks-grid" id="weeks-grid"></div>
+  </section>
+
+  <section id="roster-section">
+    <div class="section-head">
+      <div class="eyebrow">Les équipes</div>
+      <h2>Feuilles de match</h2>
+      <p>Le détail semaine par semaine pour chaque commercial.</p>
+    </div>
+    <div class="roster-grid" id="roster-grid"></div>
+  </section>
+
+  <section id="rank-section">
+    <div class="section-head">
+      <div class="eyebrow">Performers de la semaine</div>
+      <h2>MVP &amp; lanterne rouge, par équipe</h2>
+      <p>Chaque semaine, le meilleur et le moins bon résultat de chaque équipe sont mis en avant (dès 2 scores saisis). Le bilan du mois — qui a été le plus souvent top — désigne le MVP et la lanterne rouge de chaque équipe. Rester lanterne rouge 2 semaines de suite double le malus, de -25% à -50%.</p>
+    </div>
+    <div class="roster-grid" id="rank-grid"></div>
+  </section>
+
+  <section id="prize-section">
+    <div class="section-head">
+      <div class="eyebrow">La cagnotte</div>
+      <h2>1000€ pour l'équipe gagnante</h2>
+      <p>Projection en temps réel si le classement s'arrêtait aujourd'hui.</p>
+    </div>
+    <div class="prize-banner" id="prize-banner"></div>
+  </section>
+
+  <footer>
+    <div>Interville — challenge interne, réservé à l'équipe commerciale.</div>
+    <div class="updated" id="updated-at"></div>
+  </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script>
+(function(){
+  "use strict";
+
+  // ---------- Supabase config ----------
+  // The anon key is meant to be public (client-side): access is governed by
+  // Row Level Security policies on the interville_entries table, not by
+  // keeping this key secret.
+  var SUPABASE_URL = "https://zabzsmffifkaaknezjmb.supabase.co";
+  var SUPABASE_ANON_KEY = "PASTE_YOUR_SUPABASE_ANON_KEY_HERE";
+
+  var TEAMS = {
+    Bordeaux: { members: ["Aymane","Maxime","Emma","Sami","Aurélien","Perrine","Cloé"] },
+    Paris: { members: ["Jules","Basile","Charles","Kevin","Théo","Théophile","Léo"] }
+  };
+  var ALL_PEOPLE = TEAMS.Bordeaux.members.concat(TEAMS.Paris.members);
+  var WEEKS = [
+    { n:1, epreuve:"Rendez-vous pris", unit:"RDV pris" },
+    { n:2, epreuve:"Journée parfaite", unit:"journées parfaites" },
+    { n:3, epreuve:"Rendez-vous faits", unit:"RDV faits" },
+    { n:4, epreuve:"CDI signés", unit:"CDI signés" }
+  ];
+  var PRIZE_POT = 1000;
+
+  function teamOf(name){ return TEAMS.Bordeaux.members.indexOf(name) > -1 ? "Bordeaux" : "Paris"; }
+  function slug(name){
+    return name.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/[^a-z0-9]/g,"");
+  }
+  function esc(s){
+    return String(s).replace(/[&<>"']/g, function(c){
+      return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c];
+    });
+  }
+  function fmtEuro(n){
+    return (Math.round(n * 100) / 100).toLocaleString("fr-FR", { minimumFractionDigits: 0, maximumFractionDigits: 2 }) + " €";
+  }
+
+  // entries: Map id -> {week, name, team, value, updated_at}
+  var entries = new Map();
+  var sb = null;
+
+  function upsertLocal(row){
+    if (!row || typeof row.week !== "number" || !row.name) return;
+    entries.set(row.id, { week: row.week, name: row.name, team: row.team, value: Number(row.value), updated_at: row.updated_at });
+  }
+
+  // ---------- form setup ----------
+  var nameSel = document.getElementById("f-name");
+  var weekSel = document.getElementById("f-week");
+  var valueInput = document.getElementById("f-value");
+  var valueLabel = document.getElementById("f-value-label");
+  var submitBtn = document.getElementById("f-submit");
+  var statusMsg = document.getElementById("f-status");
+
+  function buildFormOptions(){
+    var og1 = document.createElement("optgroup"); og1.label = "Bordeaux";
+    TEAMS.Bordeaux.members.forEach(function(n){ var o = document.createElement("option"); o.value = n; o.textContent = n; og1.appendChild(o); });
+    var og2 = document.createElement("optgroup"); og2.label = "Paris";
+    TEAMS.Paris.members.forEach(function(n){ var o = document.createElement("option"); o.value = n; o.textContent = n; og2.appendChild(o); });
+    nameSel.appendChild(og1); nameSel.appendChild(og2);
+
+    WEEKS.forEach(function(w){
+      var o = document.createElement("option");
+      o.value = String(w.n);
+      o.textContent = "Semaine " + w.n + " — " + w.epreuve;
+      weekSel.appendChild(o);
+    });
+
+    try {
+      var saved = localStorage.getItem("interville-who");
+      if (saved && ALL_PEOPLE.indexOf(saved) > -1) nameSel.value = saved;
+    } catch(e){}
+  }
+
+  function prefillValue(){
+    var name = nameSel.value, week = Number(weekSel.value);
+    var w = WEEKS.find(function(x){ return x.n === week; });
+    valueLabel.textContent = "Score — " + (w ? w.unit : "");
+    var key = "w" + week + "-" + slug(name);
+    var e = entries.get(key);
+    valueInput.value = e ? e.value : "";
+  }
+
+  nameSel.addEventListener("change", function(){
+    try { localStorage.setItem("interville-who", nameSel.value); } catch(e){}
+    prefillValue();
+  });
+  weekSel.addEventListener("change", prefillValue);
+
+  submitBtn.addEventListener("click", function(){
+    var name = nameSel.value, week = Number(weekSel.value);
+    var raw = valueInput.value;
+    if (raw === "" || isNaN(Number(raw)) || Number(raw) < 0){
+      statusMsg.textContent = "Entre un score valide (0 ou plus).";
+      statusMsg.className = "status-msg err";
+      return;
+    }
+    if (!sb){
+      statusMsg.textContent = "Connexion à la base indisponible pour l’instant, réessaie dans un instant.";
+      statusMsg.className = "status-msg err";
+      return;
+    }
+    var val = Number(raw);
+    var id = "w" + week + "-" + slug(name);
+    var row = { id: id, week: week, name: name, team: teamOf(name), value: val, updated_at: new Date().toISOString() };
+
+    submitBtn.disabled = true;
+    statusMsg.textContent = "Enregistrement…";
+    statusMsg.className = "status-msg";
+    sb.from("interville_entries").upsert(row).then(function(res){
+      submitBtn.disabled = false;
+      if (res.error){
+        statusMsg.textContent = "Échec de l’enregistrement (" + res.error.message + ").";
+        statusMsg.className = "status-msg err";
+        return;
+      }
+      statusMsg.textContent = "Score enregistré ✓";
+      statusMsg.className = "status-msg ok";
+      upsertLocal(row);
+      render();
+      prefillValue();
+    });
+  });
+
+  // ---------- computations ----------
+  function weekTotals(weekN){
+    var totals = { Bordeaux: 0, Paris: 0 };
+    var count = 0;
+    entries.forEach(function(e){
+      if (e.week === weekN){ totals[e.team] += Number(e.value) || 0; count++; }
+    });
+    return { totals: totals, count: count };
+  }
+
+  function weekWinner(weekN){
+    var r = weekTotals(weekN);
+    if (r.count === 0) return null;
+    if (r.totals.Bordeaux > r.totals.Paris) return "Bordeaux";
+    if (r.totals.Paris > r.totals.Bordeaux) return "Paris";
+    return "Tie";
+  }
+
+  function monthlyPoints(){
+    var pts = { Bordeaux: 0, Paris: 0 };
+    WEEKS.forEach(function(w){
+      var win = weekWinner(w.n);
+      if (win === "Bordeaux") pts.Bordeaux += 1;
+      else if (win === "Paris") pts.Paris += 1;
+      else if (win === "Tie"){ pts.Bordeaux += 0.5; pts.Paris += 0.5; }
+    });
+    return pts;
+  }
+
+  // top/low performer of one team for one week (needs >=2 distinct-value entries)
+  function weekTeamPerformers(weekN, teamName){
+    var rows = [];
+    entries.forEach(function(e){ if (e.week === weekN && e.team === teamName) rows.push(e); });
+    if (rows.length < 2) return { rows: rows, top: [], low: [], tie: false };
+    var vals = rows.map(function(r){ return r.value; });
+    var maxV = Math.max.apply(null, vals);
+    var minV = Math.min.apply(null, vals);
+    if (maxV === minV) return { rows: rows, top: [], low: [], tie: true };
+    var top = rows.filter(function(r){ return r.value === maxV; }).map(function(r){ return r.name; });
+    var low = rows.filter(function(r){ return r.value === minV; }).map(function(r){ return r.name; });
+    return { rows: rows, top: top, low: low, tie: false };
+  }
+
+  // per-person tally of weekly top/low appearances + total + longest consecutive
+  // run as low performer, within one team
+  function monthlyTeamStats(teamName){
+    var stats = {};
+    TEAMS[teamName].members.forEach(function(n){ stats[n] = { name:n, topCount:0, lowCount:0, total:0, weeksPlayed:0, streak:0, maxStreak:0 }; });
+    WEEKS.forEach(function(w){
+      var perf = weekTeamPerformers(w.n, teamName);
+      perf.rows.forEach(function(r){
+        stats[r.name].total += Number(r.value) || 0;
+        stats[r.name].weeksPlayed += 1;
+      });
+      perf.top.forEach(function(n){ stats[n].topCount += 1; });
+      var lowThisWeek = {};
+      perf.low.forEach(function(n){ stats[n].lowCount += 1; lowThisWeek[n] = true; });
+      TEAMS[teamName].members.forEach(function(n){
+        if (lowThisWeek[n]){
+          stats[n].streak += 1;
+          if (stats[n].streak > stats[n].maxStreak) stats[n].maxStreak = stats[n].streak;
+        } else {
+          stats[n].streak = 0;
+        }
+      });
+    });
+    return TEAMS[teamName].members.map(function(n){ return stats[n]; });
+  }
+
+  // the team's MVP / lanterne rouge of the month: most weekly top/low appearances.
+  // A low performer stuck in last place 2+ weeks running sees their malus
+  // escalate from -25% (weight 0.75) to -50% (weight 0.5) of the base share.
+  function monthlyTeamPerformer(teamName){
+    var list = monthlyTeamStats(teamName).filter(function(s){ return s.weeksPlayed > 0; });
+    if (!list.length) return { top: null, low: null, lowStreak: 0, lowWeight: 1 };
+    var byTop = list.slice().sort(function(a,b){
+      if (b.topCount !== a.topCount) return b.topCount - a.topCount;
+      if (b.total !== a.total) return b.total - a.total;
+      return a.name.localeCompare(b.name);
+    });
+    var byLow = list.slice().sort(function(a,b){
+      if (b.lowCount !== a.lowCount) return b.lowCount - a.lowCount;
+      if (a.total !== b.total) return a.total - b.total;
+      return a.name.localeCompare(b.name);
+    });
+    var top = byTop[0].topCount > 0 ? byTop[0].name : null;
+    var lowEntry = byLow[0].lowCount > 0 ? byLow[0] : null;
+    var low = lowEntry ? lowEntry.name : null;
+    if (top && low && top === low) { low = null; lowEntry = null; }
+    var lowStreak = lowEntry ? lowEntry.maxStreak : 0;
+    var lowWeight = lowStreak >= 2 ? 0.5 : 0.75;
+    return { top: top, low: low, lowStreak: lowStreak, lowWeight: lowWeight };
+  }
+
+  // ---------- render ----------
+  function renderScoreboard(){
+    var pts = monthlyPoints();
+    var html = '<div class="score-row">' +
+      '<div class="score-side bordeaux"><div class="score-team-name team-name-icon"><svg class="icon icon-lg"><use href="#icon-canele"></use></svg>Bordeaux</div><div class="score-points">' + fmtPts(pts.Bordeaux) + '</div><div class="score-sub">' + TEAMS.Bordeaux.members.length + ' sales</div></div>' +
+      '<div class="score-vs"><div class="score-vs-mascot"><div class="coin"><svg class="icon"><use href="#icon-cow"></use></svg></div><span class="label">VS</span></div></div>' +
+      '<div class="score-side paris"><div class="score-team-name team-name-icon"><svg class="icon icon-lg"><use href="#icon-eiffel"></use></svg>Paris</div><div class="score-points">' + fmtPts(pts.Paris) + '</div><div class="score-sub">' + TEAMS.Paris.members.length + ' sales</div></div>' +
+      '</div>';
+    html += '<div class="week-dots">';
+    WEEKS.forEach(function(w){
+      var win = weekWinner(w.n);
+      var cls = win === "Bordeaux" ? "win-bordeaux" : win === "Paris" ? "win-paris" : win === "Tie" ? "win-tie" : "";
+      html += '<div class="week-dot"><div class="chip ' + cls + '">S' + w.n + '</div><span>' + (win ? (win === "Tie" ? "égalité" : win) : "à venir") + '</span></div>';
+    });
+    html += '</div>';
+    document.getElementById("scoreboard").innerHTML = html;
+  }
+
+  function fmtPts(n){
+    return (n % 1 === 0) ? String(n) : n.toFixed(1);
+  }
+
+  function performerTagsHtml(perf, lowStreak){
+    if (perf.rows.length < 2) return "";
+    if (perf.tie) return '<span class="performer-tag top" style="opacity:0.7"><svg class="icon mini-icon"><use href="#icon-crown"></use></svg>égalité</span>';
+    var html = "";
+    perf.top.forEach(function(n){ html += '<span class="performer-tag top"><svg class="icon mini-icon"><use href="#icon-crown"></use></svg>' + esc(n) + '</span>'; });
+    perf.low.forEach(function(n){
+      var streak = lowStreak[n] || 0;
+      var streakTxt = streak >= 2 ? ' · ' + streak + 'x de suite' : '';
+      html += '<span class="performer-tag low"><svg class="icon mini-icon"><use href="#icon-lantern"></use></svg>' + esc(n) + streakTxt + '</span>';
+    });
+    return html;
+  }
+
+  function renderWeeks(){
+    var html = "";
+    var lowStreak = {};
+    WEEKS.forEach(function(w){
+      var r = weekTotals(w.n);
+      var max = Math.max(r.totals.Bordeaux, r.totals.Paris, 1);
+      var win = weekWinner(w.n);
+      var leaderCls = win === "Bordeaux" ? "bordeaux" : win === "Paris" ? "paris" : win === "Tie" ? "tie" : "pending";
+      var leaderIcon = win === "Bordeaux" ? '<svg class="icon mini-icon"><use href="#icon-canele"></use></svg>' : win === "Paris" ? '<svg class="icon mini-icon"><use href="#icon-eiffel"></use></svg>' : "";
+      var leaderText = win === "Bordeaux" ? "Bordeaux mène" : win === "Paris" ? "Paris mène" : win === "Tie" ? "Égalité parfaite" : "Aucun score saisi";
+
+      var perfB = weekTeamPerformers(w.n, "Bordeaux");
+      var perfP = weekTeamPerformers(w.n, "Paris");
+      var topSet = {}, lowSet = {};
+      perfB.top.concat(perfP.top).forEach(function(n){ topSet[n] = true; });
+      perfB.low.concat(perfP.low).forEach(function(n){ lowSet[n] = true; });
+
+      ALL_PEOPLE.forEach(function(n){
+        if (lowSet[n]) lowStreak[n] = (lowStreak[n] || 0) + 1;
+        else lowStreak[n] = 0;
+      });
+
+      var rows = [];
+      entries.forEach(function(e){ if (e.week === w.n) rows.push(e); });
+      rows.sort(function(a,b){ return b.value - a.value; });
+      var entered = rows.map(function(r2){ return r2.name; });
+      var pending = ALL_PEOPLE.filter(function(n){ return entered.indexOf(n) === -1; });
+
+      var contribHtml = rows.map(function(r2){
+        var icon = topSet[r2.name] ? '<svg class="icon mini-icon"><use href="#icon-crown"></use></svg>' : lowSet[r2.name] ? '<svg class="icon mini-icon"><use href="#icon-lantern"></use></svg>' : "";
+        return '<span class="chip-person ' + (r2.team === "Bordeaux" ? "bordeaux" : "paris") + '">' + icon + esc(r2.name) + ' <span class="v">' + r2.value + '</span></span>';
+      }).join("") + pending.map(function(n){
+        return '<span class="chip-person pending">' + esc(n) + '</span>';
+      }).join("");
+
+      html += '<div class="week-card">' +
+        '<div class="week-card-head"><div class="week-num">' + w.n + '</div><div><div class="week-card-title">' + esc(w.epreuve) + '</div><div class="week-card-sub">Semaine ' + w.n + ' · ' + esc(w.unit) + '</div></div></div>' +
+        '<div class="week-bars">' +
+          '<div class="bar-row"><span>Bordeaux</span><div class="bar-track"><div class="bar-fill bordeaux" style="width:' + (r.totals.Bordeaux / max * 100) + '%"></div></div><span>' + r.totals.Bordeaux + '</span></div>' +
+          '<div class="bar-row"><span>Paris</span><div class="bar-track"><div class="bar-fill paris" style="width:' + (r.totals.Paris / max * 100) + '%"></div></div><span>' + r.totals.Paris + '</span></div>' +
+        '</div>' +
+        '<span class="week-leader ' + leaderCls + '">' + leaderIcon + leaderText + '</span>' +
+        '<div class="week-performer-row">' + performerTagsHtml(perfB, lowStreak) + performerTagsHtml(perfP, lowStreak) + '</div>' +
+        '<div class="contrib-list">' + contribHtml + '</div>' +
+      '</div>';
+    });
+    document.getElementById("weeks-grid").innerHTML = html;
+  }
+
+  function renderRosters(){
+    function tableFor(teamName){
+      var rows = TEAMS[teamName].members.map(function(name){
+        var cells = WEEKS.map(function(w){
+          var key = "w" + w.n + "-" + slug(name);
+          var e = entries.get(key);
+          return '<td>' + (e ? e.value : '<span style="color:var(--ink-faint)">–</span>') + '</td>';
+        }).join("");
+        var total = WEEKS.reduce(function(sum, w){
+          var e = entries.get("w" + w.n + "-" + slug(name));
+          return sum + (e ? Number(e.value) : 0);
+        }, 0);
+        return '<tr><td class="name">' + esc(name) + '</td>' + cells + '<td class="total">' + total + '</td></tr>';
+      }).join("");
+      var icon = teamName === "Bordeaux" ? "icon-canele" : "icon-eiffel";
+      return '<div class="roster-card">' +
+        '<div class="roster-head ' + (teamName === "Bordeaux" ? "bordeaux" : "paris") + ' team-name-icon"><svg class="icon icon-lg"><use href="#' + icon + '"></use></svg>' + teamName + '</div>' +
+        '<div class="scroll-x"><table class="roster"><thead><tr><th>Sales</th>' + WEEKS.map(function(w){ return '<th>S' + w.n + '</th>'; }).join("") + '<th>Total</th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
+      '</div>';
+    }
+    document.getElementById("roster-grid").innerHTML = tableFor("Bordeaux") + tableFor("Paris");
+  }
+
+  function performanceCard(teamName){
+    var stats = monthlyTeamStats(teamName).slice().sort(function(a,b){
+      if (b.topCount !== a.topCount) return b.topCount - a.topCount;
+      if (b.total !== a.total) return b.total - a.total;
+      return a.name.localeCompare(b.name);
+    });
+    var monthly = monthlyTeamPerformer(teamName);
+    var rows = stats.map(function(s){
+      var badge = "";
+      if (s.name === monthly.top) badge = '<span class="badge top"><svg class="icon mini-icon"><use href="#icon-crown"></use></svg>MVP du mois</span>';
+      else if (s.name === monthly.low) badge = '<span class="badge low"><svg class="icon mini-icon"><use href="#icon-lantern"></use></svg>Lanterne rouge' + (monthly.lowStreak >= 2 ? " ×" + monthly.lowStreak : "") + '</span>';
+      return '<tr><td class="name">' + esc(s.name) + '</td><td>' + s.topCount + '</td><td>' + s.lowCount + '</td><td class="total">' + s.total + '</td><td>' + badge + '</td></tr>';
+    }).join("");
+    var icon = teamName === "Bordeaux" ? "icon-canele" : "icon-eiffel";
+    return '<div class="roster-card">' +
+      '<div class="roster-head ' + (teamName === "Bordeaux" ? "bordeaux" : "paris") + ' team-name-icon"><svg class="icon icon-lg"><use href="#' + icon + '"></use></svg>' + teamName + '</div>' +
+      '<div class="scroll-x"><table class="roster"><thead><tr><th>Sales</th><th title="Fois top performer de la semaine"><svg class="icon mini-icon"><use href="#icon-crown"></use></svg></th><th title="Fois low performer de la semaine"><svg class="icon mini-icon"><use href="#icon-lantern"></use></svg></th><th>Total</th><th></th></tr></thead><tbody>' + rows + '</tbody></table></div>' +
+    '</div>';
+  }
+
+  function renderTeamPerformance(){
+    var perfInfo = { Bordeaux: monthlyTeamPerformer("Bordeaux"), Paris: monthlyTeamPerformer("Paris") };
+    document.getElementById("rank-grid").innerHTML = performanceCard("Bordeaux") + performanceCard("Paris");
+    return perfInfo;
+  }
+
+  function renderPrize(perfInfo){
+    var pts = monthlyPoints();
+    var leader = pts.Bordeaux > pts.Paris ? "Bordeaux" : pts.Paris > pts.Bordeaux ? "Paris" : null;
+    var anyData = WEEKS.some(function(w){ return weekTotals(w.n).count > 0; });
+
+    var html = '<div><div class="eyebrow" style="margin-bottom:6px;">Cagnotte du mois</div><div class="prize-amount">' + fmtEuro(PRIZE_POT) + '</div>' +
+      '<div class="prize-note">Partagée entre les membres de l’équipe qui termine le mois avec le plus de points. Bonus de 25% pour le MVP du mois de l’équipe gagnante, malus de 25% pour sa lanterne rouge — porté à 50% si elle reste en dernière place 2 semaines de suite.</div></div>';
+
+    var winners, projection;
+    if (!anyData){
+      html += '<div class="prize-note" style="max-width:none;">En attente des premiers scores pour calculer une projection.</div>';
+    } else if (!leader){
+      html += '<div class="prize-note" style="max-width:none;"><b>Égalité parfaite</b> à ce stade (' + fmtPts(pts.Bordeaux) + ' – ' + fmtPts(pts.Paris) + '). Si l’égalité persiste en fin de mois, la cagnotte sera partagée entre les deux équipes.</div>';
+    } else {
+      var monthly = perfInfo[leader];
+      winners = TEAMS[leader].members;
+      var weights = winners.map(function(n){
+        if (n === monthly.top) return 1.25;
+        if (n === monthly.low) return monthly.lowWeight;
+        return 1;
+      });
+      var sumW = weights.reduce(function(a,b){ return a+b; }, 0);
+      projection = winners.map(function(n, i){ return { name: n, amt: weights[i] / sumW * PRIZE_POT }; });
+      projection.sort(function(a,b){ return b.amt - a.amt; });
+
+      html += '<div style="width:100%;"><div class="eyebrow" style="margin-bottom:10px;">' + leader + ' mène ' + fmtPts(pts.Bordeaux) + ' – ' + fmtPts(pts.Paris) + ' — projection de répartition</div>' +
+        '<div class="prize-split">' + projection.map(function(p){
+          var tag = p.name === monthly.top ? " (bonus +25%)" : p.name === monthly.low ? (monthly.lowWeight <= 0.5 ? " (malus −50%)" : " (malus −25%)") : "";
+          return '<div class="split-item"><span class="who">' + esc(p.name) + tag + '</span><span class="amt">' + fmtEuro(p.amt) + '</span></div>';
+        }).join("") + '</div></div>';
+    }
+
+    html += '<div class="rules-note">Règles : 1 épreuve par semaine · l’équipe qui cumule le plus sur l’épreuve remporte 1 point · l’équipe au plus de points sur les 4 semaines gagne la cagnotte · dans chaque équipe, le MVP et la lanterne rouge du mois sont ceux qui ont été le plus souvent top/low performer de la semaine · une lanterne rouge 2 semaines de suite voit son malus passer de -25% à -50%.</div>';
+
+    document.getElementById("prize-banner").innerHTML = html;
+  }
+
+  function renderUpdated(){
+    var latest = null;
+    entries.forEach(function(e){ if (e.updated_at && (!latest || e.updated_at > latest)) latest = e.updated_at; });
+    var el = document.getElementById("updated-at");
+    if (latest){
+      var d = new Date(latest);
+      el.textContent = "Dernière saisie : " + d.toLocaleDateString("fr-FR") + " à " + d.toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+    } else {
+      el.textContent = "Aucune saisie pour l’instant.";
+    }
+  }
+
+  function render(){
+    renderScoreboard();
+    renderWeeks();
+    renderRosters();
+    var perfInfo = renderTeamPerformance();
+    renderPrize(perfInfo);
+    renderUpdated();
+  }
+
+  // ---------- boot ----------
+  buildFormOptions();
+  prefillValue();
+  render();
+
+  function boot(){
+    if (!window.supabase || SUPABASE_ANON_KEY.indexOf("PASTE_") === 0){
+      statusMsg.textContent = "Configuration Supabase manquante — la saisie est désactivée pour l’instant.";
+      statusMsg.className = "status-msg err";
+      return;
+    }
+    sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    sb.from("interville_entries").select("*").then(function(res){
+      if (res.error){
+        statusMsg.textContent = "Erreur de chargement des scores.";
+        statusMsg.className = "status-msg err";
+        return;
+      }
+      entries.clear();
+      (res.data || []).forEach(upsertLocal);
+      render();
+      prefillValue();
+    });
+
+    sb.channel("interville_entries_changes")
+      .on("postgres_changes", { event: "*", schema: "public", table: "interville_entries" }, function(payload){
+        if (payload.eventType === "DELETE"){
+          entries.delete(payload.old.id);
+        } else {
+          upsertLocal(payload.new);
+        }
+        render();
+        prefillValue();
+      })
+      .subscribe();
+  }
+  boot();
+})();
+</script>
+</body>
+</html>
